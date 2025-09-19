@@ -1,0 +1,118 @@
+
+-- create table (1)
+create table customar(
+customarID int primary key, Name varchar(50), Email varchar(50), Address varchar(50)
+);
+
+(1) inseart at last 5 simple customar into a customar table
+
+insert into customar values:
+(1,"parth", "parthpbhagat@gmail.com","ahemdabad"),
+(2, "dev","devpatel@gmail.com","nagpur"),
+(3,"chetan","chetanpbhagat@gmail.com","nagpur"),
+(4,"krish","krishpatel@gmail.com","ahemdabad"),
+(5,"tushar","tusharpatel@gmail.com","bhuj");
+
+(2) retraive all customar deatils:
+select * from customar;
+
+(3) update a customar address:
+UPDATE customar
+SET address = "surat"
+WHERE customarID = 2;
+
+(4) Delete a customar using there a customarid:
+delete from customar
+where customarID = 1;
+
+(5) display all customar deatils:
+select * from customar;
+
+
+************************************************** & *****************************************************
+-- create table (2)
+create table order_table(
+order_id int primary key, customarID int,order_date varchar(50),amount int
+);
+
+(1) insert at last 5 simple orders into a order table:
+insert into order_table values(1,2,"17-08-2025",450),
+(2,3,"18-08-2025",550),
+(3,4,"19-8-2025",650),
+(4,3,"20-8-2025",950),
+(5,2,"21-08-2025",1050);
+
+
+(2) retrive all order deatils:
+select * from order_table; 
+
+(3) update an oders total amount:
+update order_table 
+set  amount = "1000"
+where order_id = 4;
+
+(4) delete an order useing ordered:
+delete from order_table
+where order_id = 5;
+
+(5) retrive the highest, lowest and average order amount using agrigate function:
+select min(amount), max(amount), avg(amount)from order_table;
+
+********************************************** & ******************************************************
+-- create table (3)
+create table products_table(product_id int primary key , product_name varchar(50),stock int,price int);
+
+(1) insert at last 5 sample products into the products table:
+insert into products_table values(1,"laptop",4,45000),
+(2,"mobile",10,25000),
+(3,"tv",4,15000),
+(4,"washing_machin",5,20000),
+(5,"oven",6,6000);
+
+(2) retrive all products sorted by prie in desending order:
+select * from products_table
+order by price desc;
+
+(3) Update the price of a specific product:
+update products_table 
+set  price = "20000"
+where product_name = "tv";
+
+(4) Delete a product if it's out of stock:
+delete from products_table
+where stock = 0;
+
+(5) Retrive the most expensive and cheapest product using max() and min():
+select 
+max("price"), sum("price")
+from products_table;
+
+
+**************************************************** & ***************************************************
+-- create table (4) 
+create table order_deatail_table(order_deatail_id  int primary key, order_id int,product_id int, quntity int, sub_total int);
+
+(1) Insert at last 5 simple records into the Order_deatail_table:
+insert into order_deatail_table values(1,1,2,5,125000),
+(2,2,2,6,125000),
+(3,3,1,7,90000),
+(4,4,1,2,90000),
+(5,5,3,2,30000);
+
+
+(2) Retrive all order deatail for a specific order:
+select * from order_deatail_table;
+
+(3) Calculate the total revenue generated from all orders using SUM():
+select sum(sub_total)from order_deatail_table;
+
+
+(4) Retrieve the top 3 most ordered products:
+select *
+from order_deatail_table 
+order by quntity desc;
+
+
+
+
+***************************************** THANK YOU ***********************************************
