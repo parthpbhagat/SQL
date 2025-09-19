@@ -111,12 +111,12 @@ select sum(sub_total)from order_deatail_table;
 
 
 (4) Retrieve the top 3 most ordered products:
-select *
-from order_deatail_table 
-order by quntity desc;
+select *  from order_deatail_table order by  "order_deatail_id" desc 
+limit 3;
 
 
 
 
 
 ***************************************** THANK YOU ***********************************************
+
