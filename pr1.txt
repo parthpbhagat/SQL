@@ -115,9 +115,13 @@ select *  from order_deatail_table order by  "order_deatail_id" desc
 limit 3;
 
 
-(5)
+(5) Count how many times a specific product has been sold using COUNT()
+select count(*) 
+from order_deatail_table
+where product_id = 3;
 
 
 ***************************************** THANK YOU ***********************************************
+
 
 
