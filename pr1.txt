@@ -9,7 +9,6 @@ customarID int primary key, Name varchar(50), Email varchar(50), Address varchar
 );
 
 (1) inseart at last 5 simple customar into a customar table
-
 insert into customar values:
 (1,"parth", "parthpbhagat@gmail.com","ahemdabad"),
 (2, "dev","devpatel@gmail.com","nagpur"),
@@ -127,6 +126,7 @@ where product_id = 3;
 
 
 ***************************************** THANK YOU ***********************************************
+
 
 
 
