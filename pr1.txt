@@ -1,4 +1,7 @@
 
+                             pr1
+
+
 -- create table (1)
 create table customar(
 customarID int primary key, Name varchar(50), Email varchar(50), Address varchar(50)
@@ -111,6 +114,7 @@ select sum(sub_total)from order_deatail_table;
 select *
 from order_deatail_table 
 order by quntity desc;
+
 
 
 
