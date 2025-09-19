@@ -115,8 +115,9 @@ select *  from order_deatail_table order by  "order_deatail_id" desc
 limit 3;
 
 
-
+(5)
 
 
 ***************************************** THANK YOU ***********************************************
+
 
