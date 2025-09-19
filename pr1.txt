@@ -3,6 +3,7 @@
 
 
 -- create table (1)
+-- customar table
 create table customar(
 customarID int primary key, Name varchar(50), Email varchar(50), Address varchar(50)
 );
@@ -34,6 +35,8 @@ select * from customar;
 
 ************************************************** & *****************************************************
 -- create table (2)
+-- order table
+
 create table order_table(
 order_id int primary key, customarID int,order_date varchar(50),amount int
 );
@@ -63,6 +66,7 @@ select min(amount), max(amount), avg(amount)from order_table;
 
 ********************************************** & ******************************************************
 -- create table (3)
+-- product table
 create table products_table(product_id int primary key , product_name varchar(50),stock int,price int);
 
 (1) insert at last 5 sample products into the products table:
@@ -93,6 +97,7 @@ from products_table;
 
 **************************************************** & ***************************************************
 -- create table (4) 
+-- order deatail table
 create table order_deatail_table(order_deatail_id  int primary key, order_id int,product_id int, quntity int, sub_total int);
 
 (1) Insert at last 5 simple records into the Order_deatail_table:
@@ -122,6 +127,7 @@ where product_id = 3;
 
 
 ***************************************** THANK YOU ***********************************************
+
 
 
 
