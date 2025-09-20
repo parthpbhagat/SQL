@@ -1,5 +1,5 @@
 
-                             pr1
+                             pr1 data digger
 
 
 -- create table (1)
@@ -37,7 +37,7 @@ select * from customar;
 -- order table
 
 create table order_table(
-order_id int primary key, customarID int,order_date varchar(50),amount int
+order_id int primary key, customarID int,order_date date,amount int
 );
 
 (1) insert at last 5 simple orders into a order table:
@@ -108,7 +108,8 @@ insert into order_deatail_table values(1,1,2,5,125000),
 
 
 (2) Retrive all order deatail for a specific order:
-select * from order_deatail_table;
+select * from order_deatail_table
+where order_deatail_id = 1;
 
 (3) Calculate the total revenue generated from all orders using SUM():
 select sum(sub_total)from order_deatail_table;
@@ -120,12 +121,12 @@ limit 3;
 
 
 (5) Count how many times a specific product has been sold using COUNT()
-select count(*) 
-from order_deatail_table
-where product_id = 3;
+select * from order_deatail_table
+where order_deatail_id = 1;
 
 
 ***************************************** THANK YOU ***********************************************
+
 
 
 
