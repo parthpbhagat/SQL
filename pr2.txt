@@ -1,0 +1,46 @@
+(1) INNER JOIN : Retrive all orders all orders and customer deatails where orders exist
+
+(2) LEFT JOIN: REtrive all custoners and their cooesponding orders (if any)
+
+(3) RIGHT JOIN: Retrive all orders and their corresponding custoners(if any)
+
+(4) FULL OUTER JOIN: Retrive all customers and all orders, regardless of matching.
+
+(5) Subquery to find customers who have placed order worth more than the average amount.
+
+(6) Subquery to find employees with salaries above the average salary
+
+(7) Extract the year and month from the OrderDate
+
+(8) Calculate the difference in days between two dates(order date and current date)
+SELECT Orderdate,
+DATEDIFF(curdate(),Orderdate)
+AS datedifference FROM order_table;
+
+(9) Format the OrderDate to a more readable format(e.g. 'DD-MM-YYYY')
+
+(10) Concatenate FristName and LastName to from a full name:
+SELECT CONCAT(frist_name, last_name)  FROM customar;
+
+(11) Replace part of a string (e.g. replace "john" with "jonathan"):
+SELECT REPLACE(frist_name, 'john','johnthon') AS updated_name
+FROM customar;
+
+(12) Convert FirstName to uppercase and LastName to lowercase:
+select upper(frist_name)from customar;
+select lower(last_name)from customar;
+
+
+(13) Trim extra space from the Email fild:
+select trim(both " "from email)as trimedemail from customar;
+
+(14) Calculate the running total of TotalAmount for each order:
+
+(15) Rank order based on TotalAmount using the RANK() function:
+select *,
+    percent_rank() over(ORDER BY totalamount DESC) AS percentil_rank
+FROM order_table;
+
+(16) Assign a discount based on TotalAmount in order (e.g. >1000:10%off,>500:5%off):
+
+(17) Categorize employees salaries as high, medium,or low:
