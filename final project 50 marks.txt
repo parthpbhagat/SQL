@@ -1,0 +1,244 @@
+create database final_project_50;
+
+use final_project_50;
+
+/********************************************************************
+*                         CREATE TABLES
+********************************************************************/
+
+-- 1. Department Table
+CREATE TABLE department (
+    departmentid INT PRIMARY KEY,
+    department_name VARCHAR(60)
+);
+
+INSERT INTO department(departmentid, department_name)
+VALUES
+(1, "computer science"),
+(2, "mathematics"),
+(3, "english communication");
+
+
+-- 2. Student Table
+CREATE TABLE student (
+    studentid INT PRIMARY KEY,
+    frist_name VARCHAR(40),
+    last_name VARCHAR(40),
+    email VARCHAR(50),
+    birth_date DATE,
+    enrollment_date DATE,
+    departmentid INT,
+    FOREIGN KEY (departmentid) REFERENCES department(departmentid)
+);
+
+INSERT INTO student(studentid, frist_name, last_name, email, birth_date, enrollment_date, departmentid)
+VALUES
+(1, "john", "doe", "johndoe@gmail.com", "2000-01-15", "2022-08-01", 1),
+(2, "jane", "smith", "janesmith@gmail.com", "1999-05-25", "2021-08-01", 2),
+(3, "parth", "patel", "parthpatel@gmail.com", "1999-03-13", "2022-08-02", 3);
+
+
+-- 3. Courses Table
+CREATE TABLE courses (
+    coursesid INT PRIMARY KEY,
+    courses_name VARCHAR(50),
+    departmentid INT,
+    credits INT,
+    FOREIGN KEY (departmentid) REFERENCES department(departmentid)
+);
+
+INSERT INTO courses(coursesid, courses_name, departmentid, credits)
+VALUES
+(101, "introduction to sql", 1, 3),
+(102, "data structure", 2, 4),
+(103, "information technology", 3, 5);
+
+
+-- 4. Instructor Table
+CREATE TABLE instructo (
+    instructorid INT PRIMARY KEY,
+    frist_name VARCHAR(30),
+    last_name VARCHAR(30),
+    email VARCHAR(50),
+    departmentid INT,
+    FOREIGN KEY (departmentid) REFERENCES department(departmentid)
+);
+
+INSERT INTO instructo(instructorid, frist_name, last_name, email, departmentid)
+VALUES
+(1, "alice", "johnson", "alicejohnson@gmail.com", 1),
+(2, "bob", "lee", "boblee@gmail.com", 2),
+(3, "parth", "patel", "parthpatel@gmail.com", 3);
+
+
+-- 5. Enrollment Table
+CREATE TABLE enrollment (
+    enrolmentid INT PRIMARY KEY,
+    studentid INT,
+    coursesid INT,
+    enrolmentdate DATE,
+    FOREIGN KEY (studentid) REFERENCES student(studentid),
+    FOREIGN KEY (coursesid) REFERENCES courses(coursesid)
+);
+
+INSERT INTO enrollment(enrolmentid, studentid, coursesid, enrolmentdate)
+VALUES
+(1, 1, 101, "2022-08-01"),
+(2, 2, 102, "2021-08-01"),
+(3, 3, 103, "2023-08-02");
+
+
+/********************************************************************
+*                           READ TABLES
+********************************************************************/
+
+SELECT * FROM student;
+SELECT * FROM courses;
+SELECT * FROM instructo;
+SELECT * FROM enrollment;
+SELECT * FROM department;
+
+
+/********************************************************************
+*                           UPDATE TABLES
+********************************************************************/
+
+-- Update student
+UPDATE student
+SET enrollment_date = "2023-08-02"
+WHERE studentid = 3;
+
+-- Update courses
+UPDATE courses
+SET credits = 6
+WHERE coursesid = 103;
+
+-- Update instructor
+UPDATE instructo
+SET departmentid = 2
+WHERE instructorid = 3;
+
+-- Update enrollment
+UPDATE enrollment
+SET coursesid = 102
+WHERE enrolmentid = 3;
+
+-- Update department
+UPDATE department
+SET department_name = "english communication"
+WHERE departmentid = 3;
+
+
+/********************************************************************
+*                           DELETE TABLES
+********************************************************************/
+
+-- Uncomment below lines to drop tables
+DROP TABLE enrollment;
+DROP TABLE student;
+DROP TABLE instructo;
+DROP TABLE courses;
+DROP TABLE department;
+
+
+/********************************************************************
+*                      SELECT / ADVANCED QUERIES
+********************************************************************/
+
+-- 1. Students enrolled after 2022
+SELECT * 
+FROM student
+WHERE YEAR(enrollment_date) > 2022;
+
+-- 2. retrive Courses offered by Mathematics department with a limit 5 courses
+SELECT c.courses_name
+FROM courses c
+JOIN department d ON c.departmentid = d.departmentid
+WHERE d.department_name = 'mathematics'
+LIMIT 5;
+
+-- 3.get the Number of students enrolled in each course filtering for courses with more than 5 student
+SELECT c.courses_name, COUNT(e.studentid) AS total_students
+FROM enrollment e
+JOIN courses c ON e.coursesid = c.coursesid
+GROUP BY c.courses_name
+HAVING COUNT(e.studentid) > 5;
+
+-- 4. find Students who are  enrolled in both introduction to SQL and Data Structure
+SELECT s.studentid, s.frist_name, s.last_name
+FROM student s
+JOIN enrollment e1 ON s.studentid = e1.studentid
+JOIN courses c1 ON e1.coursesid = c1.coursesid
+JOIN enrollment e2 ON s.studentid = e2.studentid
+JOIN courses c2 ON e2.coursesid = c2.coursesid
+WHERE c1.courses_name = 'introduction to sql'
+  AND c2.courses_name = 'data structure';
+
+-- 5. find Students who are  either enrolled in introduction to sql  or Data Structure
+SELECT DISTINCT s.studentid, s.frist_name, s.last_name
+FROM student s
+JOIN enrollment e ON s.studentid = e.studentid
+JOIN courses c ON e.coursesid = c.coursesid
+WHERE c.courses_name IN ('introduction to sql', 'data structure');
+
+-- 6. calculate  Average number of credits for all couses
+SELECT AVG(credits) AS avg_credits
+FROM courses;
+
+
+-- 7. count the number of student enrolled  eatch department
+
+SELECT d.department_name, COUNT(s.studentid) AS total_students
+FROM student s
+JOIN department d ON s.departmentid = d.departmentid
+GROUP BY d.department_name;
+
+-- 8. INNER JOIN: all students & their corsponding courses
+SELECT S.studentid, CONCAT(S.frist_name, ' ', S.last_name) AS student_name, C.courses_name
+FROM student S
+INNER JOIN enrollment E ON S.studentid = E.studentid
+INNER JOIN courses C ON E.coursesid = C.coursesid;
+
+-- 9. LEFT JOIN: all students & their corasponding courses
+SELECT S.studentid, CONCAT(S.frist_name, ' ', S.last_name) AS student_name, C.courses_name
+FROM student S
+LEFT JOIN enrollment E ON S.studentid = E.studentid
+LEFT JOIN courses C ON E.coursesid = C.coursesid;
+
+-- 10. Subquery:find  students enrolled in courses that have more than 10 student
+
+SELECT s.studentid, CONCAT(s.frist_name, ' ', s.last_name) AS student_name
+FROM student s
+JOIN enrollment e ON s.studentid = e.studentid
+WHERE e.coursesid IN (
+    SELECT coursesid
+    FROM enrollment
+    GROUP BY coursesid
+    HAVING COUNT(studentid) > 10
+);
+
+-- 11. Extract year from enrollment date of student
+SELECT YEAR(enrollment_date) AS enrollment_year
+FROM student;
+
+-- 12. Concatenate instructor frist name and last name
+SELECT CONCAT(frist_name, ' ', last_name) AS full_name
+FROM instructo;
+
+-- 13.  calculate the Running total of students enrolled in course
+SELECT 
+    c.courses_name, 
+    COUNT(e.studentid) AS total_students,
+    SUM(COUNT(e.studentid)) OVER (ORDER BY c.courses_name) AS running_total
+FROM enrollment e
+JOIN courses c ON e.coursesid = c.coursesid
+GROUP BY c.courses_name;
+
+-- 14. Labelstudents as sinior or junir based on their year of enrollment
+ (if enrollment date is more then 4 year from the curent date put the lable senior otherwise junior)
+SELECT s.studentid, CONCAT(s.frist_name, ' ', s.last_name) AS student_name,
+    CASE
+        WHEN TIMESTAMPDIFF(YEAR, s.enrollment_date, CURDATE()) > 4 THEN 'Senior'
+        ELSE 'Junior'
+    END AS student_level
+FROM student s;
