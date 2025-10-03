@@ -1,0 +1,302 @@
+
+create database  practical;
+use practical;
+
+
+create table  department (
+    department_id INT PRIMARY KEY,
+    department_name varchar(50)
+);
+
+insert into  department (department_id, department_name) values
+(101, 'Computer Science'),
+(102, 'Mechanical Engineering'),
+(103, 'Electrical Engineering');
+
+select * from department;
+
+create table  student (
+    student_id INT PRIMARY KEY,
+    name VARCHAR(40),
+    dob DATE,
+    gender VARCHAR(10),
+    email VARCHAR(50),
+    phone_number varchar(15),
+    address VARCHAR(100),
+    admission_date DATE,
+    department_id INT,
+    FOREIGN KEY (department_id) REFERENCES department(department_id)
+);
+
+insert into  student 
+(student_id,name, dob, gender, email,phone_number,address,admission_date,department_id)
+values
+(1, 'Aarav Patel', '2004-05-12', 'Male', 'aarav.patel@example.com', 9876543210, 'Ahmedabad', '2022-07-01', 101),
+(2, 'Isha Shah', '2003-11-23', 'Female', 'isha.shah@example.com', 9876543211, 'Surat', '2022-07-01', 102),
+(3, 'Rohan Mehta', '2004-02-18', 'Male', 'rohan.mehta@example.com', 9876543212, 'Vadodara', '2022-07-01', 101),
+(4, 'Neha Desai', '2003-09-30', 'Female', 'neha.desai@example.com', 9876543213, 'Rajkot', '2022-07-01', 103),
+(5, 'Karan Joshi', '2004-06-15', 'Male', 'karan.joshi@example.com', 9876543214, 'Bhavnagar', '2022-07-01', 102),
+(6, 'Pooja Trivedi', '2003-12-05', 'Female', 'pooja.trivedi@example.com', 9876543215, 'Jamnagar', '2022-07-01', 101),
+(7, 'Devansh Rana', '2004-03-22', 'Male', 'devansh.rana@example.com', 9876543216, 'Gandhinagar', '2022-07-01', 103),
+(8, 'Sneha Bhatt', '2003-08-10', 'Female', 'sneha.bhatt@example.com', 9876543217, 'Anand', '2022-07-01', 102),
+(9, 'Yash Solanki', '2004-01-05', 'Male', 'yash.solanki@example.com', 9876543218, 'Nadiad', '2022-07-01', 101),
+(10, 'Riya Kapadia', '2003-07-19', 'Female', 'riya.kapadia@example.com', 9876543219, 'Mehsana', '2022-07-01', 103);
+
+select * from student;
+
+create table  faculty (
+    faculty_id INT PRIMARY KEY,
+    name varchar(40),
+    email varchar(50),
+    phone_number bigint,
+    department_id INT,
+    FOREIGN KEY (department_id) REFERENCES department(department_id)
+);
+
+insert into  faculty (faculty_id, name, email, phone_number, department_id) VALUES
+(1, 'Dr. Meena Shah', 'meena.shah@univ.edu', 9876500001, 101),
+(2, 'Prof. Rajiv Patel', 'rajiv.patel@univ.edu', 9876500002, 102),
+(3, 'Dr. Anjali Desai', 'anjali.desai@univ.edu', 9876500003, 103);
+
+select  * from faculty;
+
+create table  courses (
+    courses_id INT PRIMARY KEY,
+    courses_name VARCHAR(50),
+    faculty_id INT,
+    FOREIGN KEY (faculty_id) REFERENCES faculty(faculty_id)
+);
+
+INSERT INTO courses (courses_id, courses_name, faculty_id) VALUES
+(201, 'Data Structures', 1),
+(202, 'Thermodynamics', 2),
+(203, 'Circuit Analysis', 3);
+
+select * from courses;
+
+CREATE TABLE enrollment (
+    enrollment_id INT PRIMARY KEY,
+    student_id INT,
+    course_id INT,
+    enrollment_date DATE,
+    FOREIGN KEY (student_id) REFERENCES student(student_id),
+    FOREIGN KEY (course_id) REFERENCES courses(courses_id)
+);
+
+INSERT INTO enrollment (enrollment_id, student_id, course_id, enrollment_date) VALUES
+(1, 1, 201, '2022-08-01'),
+(2, 2, 202, '2022-08-01'),
+(3, 3, 201, '2022-08-01'),
+(4, 4, 203, '2022-08-01'),
+(5, 5, 202, '2022-08-01');
+
+select * from enrollment;
+
+CREATE TABLE attendance (
+    attendance_id INT PRIMARY KEY,
+    student_id INT,
+    courses_id INT,
+    attendance_date DATE,
+    status VARCHAR(20),
+    FOREIGN KEY (student_id) REFERENCES student(student_id),
+    FOREIGN KEY (courses_id) REFERENCES courses(courses_id)
+);
+
+INSERT INTO attendance (attendance_id, student_id, courses_id, attendance_date, status) VALUES
+(1, 1, 201, '2022-09-01', 'Present'),
+(2, 2, 202, '2022-09-01', 'Absent'),
+(3, 3, 201, '2022-09-01', 'Present'),
+(4, 4, 203, '2022-09-01', 'Present'),
+(5, 5, 202, '2022-09-01', 'Absent');
+
+select * from attendence;
+
+CREATE TABLE grades (
+    grades_id INT PRIMARY KEY,
+    student_id INT,
+    courses_id INT,
+    mark_obtained INT,
+    grade VARCHAR(10),
+    FOREIGN KEY (student_id) REFERENCES student(student_id),
+    FOREIGN KEY (courses_id) REFERENCES courses(courses_id)
+);
+
+INSERT INTO grades (grades_id, student_id, courses_id, mark_obtained, grade) VALUES
+(1, 1, 201, 85, 'A'),
+(2, 2, 202, 78, 'B'),
+(3, 3, 201, 92, 'A+'),
+(4, 4, 203, 67, 'C'),
+(5, 5, 202, 74, 'B');
+
+
+(1)  implement  CURD oprection 
+      insert new student , faculty member, courses and enrollments
+
+--create
+INSERT INTO department VALUES (101, 'Computer Science');
+
+INSERT INTO student (student_id,name, dob, gender, email,phone_number,address,admission_date,department_id)
+VALUES
+(11,"parth","1999-03-13","male","parthpatel@gmail.com",9011494385,"ahemdabad","2022-03-12",101);
+
+INSERT INTO faculty (faculty_id, name, email, phone_number, department_id)
+VALUES (4, 'Prof Prabhat Sir', 'prabhat.bankai@gmail.com', 9420946618, 101);
+
+
+INSERT INTO courses (courses_id, courses_name, faculty_id) VALUES
+(204,"informaction technology",1);
+
+
+INSERT INTO enrollment (enrollment_id, student_id, course_id, enrollment_date) VALUES
+(6,6,204,"2022-08-02");
+
+-- read
+select * from department;
+select * from student;
+select * from enrollment;
+select * from courses;
+select * from grades;
+select * from faculty;
+select * from grades;
+
+-- update
+UPDATE student SET phone_number = '9011494385' WHERE student_id = 1;
+
+
+-- delete
+DELETE from STUDENT WHERE student_id = 11;
+
+(2) use SQL cluses (where, having ,limit):
+get student enrolled in the computer scicence
+
+--where
+select * from student
+where department_id = (
+select department_id
+from department
+where department_name = 'Computer Science');
+
+retrive the top 10 higst scorring student
+--limit
+SELECT * FROM student ORDER BY admission_date DESC LIMIT 5;
+
+--having
+select attendance_id, count(*) as attendeance
+from attendance
+group by attendance_id
+having count(*) > 0 ;
+
+(3) apply SQL opreters (and, or,  not)
+--not
+SELECT * FROM student
+WHERE gender = 'Male' AND NOT address = 'Ahmedabad';
+
+--or
+SELECT * FROM student
+WHERE department_id = 101 OR department_id = 102;
+
+--and
+select * from student 
+where gender = "female" and not gender = "male";
+
+(4) sorting and grouping data(order by, group by)
+-- order by
+select * from student order by name asc;
+
+--group by
+select gender, count(*) as count from student group by gender;
+
+(5) use agrigate function (sum, avg, max, min, count)
+--sum
+select sum(student_id) as all_student
+from student;
+
+--avg
+select avg(mark_obtained) as average_marks from grades;
+
+--max
+select max(mark_obtained) as highest_marks from grades;
+
+--min
+select min(mark_obtained) as minimum_marks from grades;
+
+--count
+select count(*) as total_student from student where student_id ;
+
+(6) implement join (inner join, left join, right join, outer join)
+--inner join 
+select s.name, s.address, s.admission_date, c.courses_name
+from student s
+join enrollment e on s.student_id = e.student_id
+join courses c on  e.course_id = c.courses_id;
+
+--left join 
+select s.name, g.grade 
+from  student s
+left join grades g on s.student_id = g.student_id; 
+
+--right join
+select f.name, c.courses_name
+from courses c
+right join faculty f on  c.faculty_id = f.faculty_id;
+
+--outer join 
+select s.name, g.grade 
+from  student s
+left join grades g on s.student_id = g.student_id
+union
+select f.name, c.courses_name
+from courses c
+right join faculty f on  c.faculty_id = f.faculty_id;
+
+(7)impliment date and time function 
+--extract the month from attendence date
+select month(attendance_date) as extract_month from attendance;
+
+calculate the number of years since a students admission
+select a.attendance_id,a.student_id,
+timestampdiff(year, s.admission_date, curdate()) as years_since_addmission
+from attendance a
+join student s on a.student_id = s.student_id; 
+
+--format attendance_date as DD-MM-YYY
+select date_format(attendance_date,"%d-%m-%y")as formatted_date from attendance;
+
+(8) use string manipoluction function 
+convert all faculty name to upper 
+select upper(name) as uppercase_faculty_name from faculty;
+
+trim unnecessary space from student name
+select trim(name) as trim_name from student;
+
+replace null email filled with "email not provided"
+select replace(email, "null","Email not provided")  from student;
+
+(9)implement window function 
+--rank student based on their overall marks
+select student_id,
+    SUM(mark_obtained) as total_marks,
+    RANK() OVER (ORDER BY SUM(mark_obtained) DESC) as ranked
+from grades
+group by student_id;
+
+
+
+(10) apply SQL expression 
+--assign student performance level
+
+select student_id, mark_obtained,
+case 
+when mark_obtained >= 90 then "Excellent"
+when mark_obtained >= 75 then "Good"
+else "need improvment"
+end as performance
+from grades;
+
+
+
+
+
+
+
+
